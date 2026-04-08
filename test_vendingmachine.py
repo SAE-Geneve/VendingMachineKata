@@ -1,32 +1,38 @@
 import pytest
 from vendingmachine import *
-from coin import CoinType, Coin
 
+def test_coin_insert(vending_machine):
+    dime = Coin.CreateCoin(CoinType.Dime)
+    vending_machine.InsertCoin(dime)
+    assert dime in vending_machine.CheckStorage()
 
-def test_coin_insert():
-    v=VendingMachine()
-    dime=Coin.CreateCoin(CoinType.Dime)
-    v.InsertCoin(dime)
-    assert dime in v.CheckStorage()
+def test_coin_insert_multiple(vending_machine):
+    coins = []
 
-def test_coin_insert_multiple():
-    v=VendingMachine()
-    coins=[]
-
-    coins.append(Coin.CreateCoin(CoinType.Nickel))
-    coins.append(Coin.CreateCoin(CoinType.Nickel))
+    coins.append(Coin.CreateCoin(CoinType.Dime))
+    coins.append(Coin.CreateCoin(CoinType.Quarter))
     coins.append(Coin.CreateCoin(CoinType.Dime))
 
     for new_coin in coins:
-        v.InsertCoin(new_coin)
+        vending_machine.InsertCoin(new_coin)
     for new_coin in coins:
-        assert new_coin in v.CheckStorage()
+        assert new_coin in vending_machine.CheckStorage()
 
-def test_coin_invalidity():
-    v=VendingMachine()
-    penny=Coin.CreateCoin(CoinType.Penny)
-    v.InsertCoin(penny)
 
-    assert penny not in v.CheckStorage()
-    assert penny in v.CheckBasket()
-    assert len(v.CheckStorage())==0
+def test_coin_invalidity(vending_machine):
+    penny = Coin.CreateCoin(CoinType.Penny)
+    vending_machine.InsertCoin(penny)
+
+    assert penny not in vending_machine.CheckStorage()
+    assert penny in vending_machine.CheckBasket()
+    assert len(vending_machine.CheckStorage()) == 0
+
+
+@pytest.mark.parametrize("type_coin", [CoinType.Penny, CoinType.Dime, CoinType.Nickel, CoinType.Quarter])
+def test_type_coin(type_coin):
+    c = Coin.CreateCoin(type_coin)
+    assert VendingMachine.GetTypeFromCoin(c) == type_coin
+
+@pytest.fixture()
+def vending_machine():
+    return VendingMachine()

@@ -1,6 +1,14 @@
 from enum import Enum
 
 
+class CoinType(Enum):
+    Penny = 1
+    Nickel = 2
+    Dime = 3
+    Quarter = 4
+    Unrecognized = 5
+
+
 class Coin:
     def __init__(self, weight, size):
         self.weight = weight
@@ -8,34 +16,31 @@ class Coin:
 
     @staticmethod
     def CreatePenny():
-        return Coin(1, 5)
+        return Coin(1, 1)
 
     @staticmethod
     def CreateNickel():
-        return Coin(5, 5)
+        return Coin(1, 2)
 
     @staticmethod
     def CreateDime():
-        return Coin(10, 5)
+        return Coin(2, 1)
 
     @staticmethod
     def CreateQuarter():
-        return Coin(25, 5)
+        return Coin(2, 2)
 
     @staticmethod
-    def CreateCoin(coin: CoinType):
-        if coin == CoinType.Penny:
-            return Coin.CreatePenny()
-        elif coin == CoinType.Nickel:
-            return Coin.CreateNickel()
-        elif coin == CoinType.Dime:
-            return Coin.CreateDime()
-        elif coin == Coin.CreateQuarter():
-            return Coin.CreateQuarter()
+    def CreateCoin(coin_type: CoinType):
+        if coin_type not in dico:
+            raise ValueError("Invalid coin")
+        func = dico.get(coin_type)
+        return func()
 
 
-class CoinType(Enum):
-    Penny = 1
-    Nickel = 2
-    Dime = 3
-    Quarter = 4
+dico = {
+    CoinType.Penny: Coin.CreatePenny,
+    CoinType.Nickel: Coin.CreateNickel,
+    CoinType.Dime: Coin.CreateDime,
+    CoinType.Quarter: Coin.CreateQuarter
+}

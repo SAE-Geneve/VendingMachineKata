@@ -1,26 +1,38 @@
 from coin import CoinType, Coin
 from typing import List
 
+
 class VendingMachine:
     def __init__(self):
-        self.total_money:float=0
-        self.storage:List[Coin]=[]
-        self.coins_basket:List[Coin]=[]
+        self.storage: List[Coin] = []
+        self.coins_basket: List[Coin] = []
 
-    def InsertCoin(self, first_coin: Coin, *args):
-        coins=list(args)+[first_coin]
-        #self.storage.extend(coins)
+    def InsertCoin(self, first_coin, *args):
+        coins = list(args) + [first_coin]
+        valid_coins = []
 
-        if first_coin.weight == 1:
-            self.coins_basket.append(first_coin)
-            return
-        else:
-            self.storage.append(first_coin)
-            self.total_money=first_coin.weight
-            return
+        for c in coins:
+            if VendingMachine.GetTypeFromCoin(c) != CoinType.Penny:
+                valid_coins.append(c)
+            else:
+                self.coins_basket.append(c)
+
+        self.storage.extend(valid_coins)
 
     def CheckStorage(self):
         return self.storage
 
     def CheckBasket(self):
         return self.coins_basket
+
+    @staticmethod
+    def GetTypeFromCoin(coin: Coin):
+        if coin.weight == 1 and coin.size == 1:
+            return CoinType.Penny
+        elif coin.weight == 1 and coin.size == 2:
+            return CoinType.Nickel
+        elif coin.weight == 2 and coin.size == 1:
+            return CoinType.Dime
+        elif coin.weight == 2 and coin.size == 2:
+            return CoinType.Quarter
+        return None
