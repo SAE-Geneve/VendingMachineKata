@@ -1,6 +1,6 @@
 ﻿from coin import Coin, CoinType
 from product import Product
-from vending_machine import VendingMachine
+from vendingmachine import VendingMachine
 
 
 if __name__ == '__main__':
