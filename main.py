@@ -7,3 +7,4 @@ if __name__ == '__main__':
     quarter = Coin(1, 5)
 
     print(penny.weight, " ",penny.size)
+    print("coucou")
