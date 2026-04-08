@@ -13,19 +13,19 @@ class Coin:
 
     @staticmethod
     def create_penny():
-        return Coin(1, 5)
+        return Coin(1, 2)
 
     @staticmethod
     def create_dime():
-        return Coin(1, 5)
+        return Coin(1, 1)
 
     @staticmethod
     def create_nickel():
-        return Coin(1, 5)
+        return Coin(2, 1)
 
     @staticmethod
-    def create_quarters():
-        return Coin(1, 5)
+    def create_quarter():
+        return Coin(2, 2)
 
     @staticmethod
     def create_coin(type: CoinType):
@@ -36,4 +36,4 @@ class Coin:
         elif type == CoinType.NICKEL:
             return Coin.create_nickel()
         else:
-            return Coin.create_quarters()
+            return Coin.create_quarter()
