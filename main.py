@@ -88,7 +88,7 @@ def main():
             print(f"\n--- Inserted coins ---")
             if vm.money:
                 for coin in vm.money:
-                    print(f"  {coin.type}")
+                    print(f"  {coin.name}")
             else:
                 print("  No coins inserted.")
             print(f"\n--- Total balance: ${vm.valueTotal:.2f} ---")
