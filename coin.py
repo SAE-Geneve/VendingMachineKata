@@ -1,41 +1,25 @@
-from enum import Enum
+type_coin = ["nickels", "dimes", "quarters", "pennies"]
 
-
-class Coin:
-    def __init__(self, weight, size):
-        self.weight = weight
-        self.size = size
-
-    @staticmethod
-    def CreatePenny():
-        return Coin(1, 5)
-
-    @staticmethod
-    def CreateNickel():
-        return Coin(5, 5)
-
-    @staticmethod
-    def CreateDime():
-        return Coin(10, 5)
-
-    @staticmethod
-    def CreateQuarter():
-        return Coin(25, 5)
-
-    @staticmethod
-    def CreateCoin(coin: CoinType):
-        if coin == CoinType.Penny:
-            return Coin.CreatePenny()
-        elif coin == CoinType.Nickel:
-            return Coin.CreateNickel()
-        elif coin == CoinType.Dime:
-            return Coin.CreateDime()
-        elif coin == Coin.CreateQuarter():
-            return Coin.CreateQuarter()
-
-
-class CoinType(Enum):
-    Penny = 1
-    Nickel = 2
-    Dime = 3
-    Quarter = 4
+class Coin():
+    def __init__(self, name: str):
+        self.name = name
+        if name == type_coin[0]:
+            self.weight = 1.5
+            self.size = 1.5
+            self.value = 1.5
+        elif name == type_coin[1]:
+            self.weight = 1.0
+            self.size = 1.0
+            self.value = 1.0
+        elif name == type_coin[2]:
+            self.weight = 0.5
+            self.size = 0.5
+            self.value = 0.5
+        elif name == type_coin[3]:
+            self.weight = 0.2
+            self.size = 0.2
+            self.value = 0.2
+        else:
+            self.weight = 0.0
+            self.size = 0.0
+            self.value = 0.0

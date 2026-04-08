@@ -1,4 +1,10 @@
-class Products:
-    def __init__(self, name, price):
+from products_list import Products
+
+class Produt():
+    def __init__(self, name: str):
         self.name = name
-        self.price = price
+        for p in Products:
+            if self.name == p:
+                self.value = Products[p]
+                return
+        print("Product Not Existe")
