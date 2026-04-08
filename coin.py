@@ -12,15 +12,15 @@ class Coin:
 
     @staticmethod
     def CreateNickel():
-        return Coin(1, 5)
+        return Coin(5, 5)
 
     @staticmethod
     def CreateDime():
-        return Coin(1, 5)
+        return Coin(10, 5)
 
     @staticmethod
     def CreateQuarter():
-        return Coin(1, 5)
+        return Coin(25, 5)
 
     @staticmethod
     def CreateCoin(coin: CoinType):
