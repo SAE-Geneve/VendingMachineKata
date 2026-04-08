@@ -3,35 +3,39 @@ from vendingmachine import *
 from coin import *
 from product import *
 
-def test_insert_valid_coin():
-    v = VendingMachine()
+@pytest.fixture
+def vending_machine():
+    return VendingMachine()
 
+def test_insert_valid_coin(vending_machine):
     nickel = Coin.create_nickel()
-    v.insert_coin(nickel)
+    vending_machine.insert_coin(nickel)
 
-    assert nickel in v.storage()
+    assert nickel in vending_machine.storage()
 
-def test_insert_invalid_coin():
-    v = VendingMachine()
-
+def test_insert_invalid_coin(vending_machine):
     penny = Coin.create_penny()
-    v.insert_coin(penny)
+    vending_machine.insert_coin(penny)
 
-    assert penny not in v.storage()
-    assert penny in v.basket()
-    assert len(v.storage()) == 0
+    assert penny not in vending_machine.storage()
+    assert penny in vending_machine.basket()
+    assert len(vending_machine.storage()) == 0
 
-def test_insert_multiple_coins():
-    v = VendingMachine()
-
+def test_insert_multiple_coins(vending_machine):
     nickel = Coin.create_nickel()
     nickel2 = Coin.create_nickel()
     dime = Coin.create_dime()
 
-    v.insert_coin(nickel, nickel2, dime)
+    vending_machine.insert_coin(nickel, nickel2, dime)
 
-    s = v.storage()
+    s = vending_machine.storage()
 
     assert nickel in s
     assert nickel2 in s
     assert dime in s
+
+@pytest.mark.parametrize("coin_type", [CoinType.Penny, CoinType.Nickel, CoinType.Dime, CoinType.Quarter])
+def test_coin_type(coin_type):
+    coin = Coin.create_coin(coin_type)
+    assert VendingMachine.get_coin_type(coin) == coin_type
+
