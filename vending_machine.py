@@ -1,6 +1,5 @@
-from coin import Coin, CoinType
+from coin import Coin, CoinType, coin_parameter_map
 from typing import List
-
 
 class VendingMachine:
     def __init__(self):
@@ -26,12 +25,7 @@ class VendingMachine:
 
     @staticmethod
     def get_type_from_coin(coin: Coin):
-        if coin.weight == 1 and coin.size == 1:
-            return CoinType.DIME
-        elif coin.weight == 1 and coin.size == 2:
-            return CoinType.PENNY
-        elif coin.weight == 2 and coin.size == 1:
-            return CoinType.NICKEL
-        elif coin.weight == 2 and coin.size == 2:
-            return CoinType.QUARTER
+        for key, param in coin_parameter_map.items():
+            if param == coin.coin_parameter:
+                return key
         return CoinType.INVALID
