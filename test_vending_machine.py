@@ -39,7 +39,7 @@ def test_return_coins(vending_machine):
 
     assert len(vending_machine.get_inserted_coins()) == 0
 
-def test_storage_sum(vending_machine):
+def test_inserted_coins_sum(vending_machine):
     quarter = Coin.create_coin(CoinType.QUARTER) # 25 cents
 
     vending_machine.insert_coin(quarter, quarter, quarter, quarter)
