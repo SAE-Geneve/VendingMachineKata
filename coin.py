@@ -19,38 +19,21 @@ class Coin:
         self.coin_parameter = coin_parameter
 
     @staticmethod
-    def create_penny():
-        return Coin(coin_parameter_map.get(CoinType.PENNY))
-
-    @staticmethod
-    def create_dime():
-        return Coin(coin_parameter_map.get(CoinType.DIME))
-
-    @staticmethod
-    def create_nickel():
-        return Coin(coin_parameter_map.get(CoinType.NICKEL))
-
-    @staticmethod
-    def create_quarter():
-        return Coin(coin_parameter_map.get(CoinType.QUARTER))
-
-    @staticmethod
     def create_coin(coin_type: CoinType):
-        if coin_type not in coin_creation_map:
+        if coin_type not in coin_parameter_map:
             raise ValueError("Invalid Coin")
-        return coin_creation_map.get(coin_type)()
+        return Coin(coin_parameter_map.get(coin_type))
+
+    @staticmethod
+    def get_type_from_coin(coin: Coin):
+        for key, param in coin_parameter_map.items():
+            if param == coin.coin_parameter:
+                return key
+        return CoinType.INVALID
 
 coin_parameter_map = {
     CoinType.PENNY: CoinParameter(1, 1, 1),
     CoinType.DIME: CoinParameter(1, 2, 5),
     CoinType.NICKEL: CoinParameter(2, 1, 10),
     CoinType.QUARTER: CoinParameter(2, 2, 25)
-}
-
-
-coin_creation_map = {
-    CoinType.DIME: Coin.create_dime,
-    CoinType.NICKEL: Coin.create_nickel,
-    CoinType.PENNY: Coin.create_penny,
-    CoinType.QUARTER: Coin.create_quarter
 }

@@ -1,4 +1,4 @@
-from coin import Coin, CoinType, coin_parameter_map
+from coin import Coin, CoinType
 from typing import List
 
 class VendingMachine:
@@ -10,7 +10,7 @@ class VendingMachine:
         coins = list(args) + [first_coin]
         valid_coins = []
         for c in coins:
-            if VendingMachine.get_type_from_coin(c) != CoinType.PENNY:
+            if Coin.get_type_from_coin(c) != CoinType.PENNY:
                 valid_coins.append(c)
             else:
                 self.basket.append(c)
@@ -22,10 +22,3 @@ class VendingMachine:
 
     def get_basket(self):
         return self.basket
-
-    @staticmethod
-    def get_type_from_coin(coin: Coin):
-        for key, param in coin_parameter_map.items():
-            if param == coin.coin_parameter:
-                return key
-        return CoinType.INVALID

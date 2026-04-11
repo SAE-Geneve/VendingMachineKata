@@ -1,5 +1,6 @@
 import pytest
 from vending_machine import *
+from coin import Coin
 
 def test_coin_insert(vending_machine):
     d = Coin.create_coin(CoinType.DIME)
@@ -32,7 +33,7 @@ def test_coin_invalidity(vending_machine):
 @pytest.mark.parametrize("type_coin", [CoinType.DIME, CoinType.NICKEL, CoinType.PENNY, CoinType.QUARTER])
 def test_coin_type(type_coin: CoinType):
     c = Coin.create_coin(type_coin)
-    assert VendingMachine.get_type_from_coin(c) == type_coin
+    assert Coin.get_type_from_coin(c) == type_coin
 
 @pytest.fixture
 def vending_machine():
