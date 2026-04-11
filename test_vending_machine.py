@@ -3,37 +3,42 @@ from vending_machine import *
 from coin import Coin
 
 def test_coin_insert(vending_machine):
-    d = Coin.create_coin(CoinType.DIME)
-    vending_machine.insert_coin(d)
-    assert d in vending_machine.get_storage()
+    dime = Coin.create_coin(CoinType.DIME)
+    vending_machine.insert_coin(dime)
+    assert dime in vending_machine.get_storage()
 
 def test_coin_insert_multiple(vending_machine):
-    d = Coin.create_coin(CoinType.DIME)
-    n = Coin.create_coin(CoinType.NICKEL)
-    q = Coin.create_coin(CoinType.QUARTER)
+    dime = Coin.create_coin(CoinType.DIME)
+    nickel = Coin.create_coin(CoinType.NICKEL)
+    quarter = Coin.create_coin(CoinType.QUARTER)
 
-    vending_machine.insert_coin(d)
-    vending_machine.insert_coin(n)
-    vending_machine.insert_coin(q)
+    vending_machine.insert_coin(dime, nickel, quarter)
 
     storage = vending_machine.get_storage()
 
-    assert d in storage
-    assert n in storage
-    assert q in storage
+    assert dime in storage
+    assert nickel in storage
+    assert quarter in storage
 
 def test_coin_invalidity(vending_machine):
-    p = Coin.create_coin(CoinType.PENNY)
+    penny = Coin.create_coin(CoinType.PENNY)
 
-    vending_machine.insert_coin(p)
+    vending_machine.insert_coin(penny)
 
     assert len(vending_machine.get_storage()) == 0
-    assert p in vending_machine.get_basket()
+    assert penny in vending_machine.get_basket()
+
+def test_storage_sum(vending_machine):
+    coin = Coin.create_coin(CoinType.QUARTER)
+
+    vending_machine.insert_coin(coin, coin, coin, coin)
+
+    assert vending_machine.storage_sum() == 100
 
 @pytest.mark.parametrize("type_coin", [CoinType.DIME, CoinType.NICKEL, CoinType.PENNY, CoinType.QUARTER])
 def test_coin_type(type_coin: CoinType):
-    c = Coin.create_coin(type_coin)
-    assert Coin.get_type_from_coin(c) == type_coin
+    coin = Coin.create_coin(type_coin)
+    assert Coin.get_type_from_coin(coin) == type_coin
 
 @pytest.fixture
 def vending_machine():
