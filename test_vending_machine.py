@@ -23,7 +23,8 @@ def test_coin_invalidity(vending_machine, coin_penny):
 def test_return_coins(vending_machine, coin_penny, coin_dime):
     vending_machine.insert_coin(coin_penny, coin_dime)
 
-    assert coin_penny, coin_dime in vending_machine.get_inserted_coins()
+    assert coin_dime in vending_machine.get_inserted_coins()
+    assert coin_penny not in vending_machine.get_inserted_coins()
 
     vending_machine.return_coins()
 
