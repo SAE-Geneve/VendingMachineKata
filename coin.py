@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from enum import Enum
 
 class CoinType(Enum):
@@ -7,11 +8,17 @@ class CoinType(Enum):
     QUARTER = 4
     INVALID = 5
 
+@dataclass
+class CoinParameter:
+    weight: int
+    size: int
+    value: float
+
+
 class Coin:
     def __init__(self, weight, size):
         self.weight = weight
         self.size = size
-
 
     @staticmethod
     def create_penny():
@@ -31,12 +38,11 @@ class Coin:
 
     @staticmethod
     def create_coin(coin_type: CoinType):
-        if coin_type not in dico:
+        if coin_type not in coin_creation_map:
             raise ValueError("Invalid Coin")
-        func = dico.get(coin_type)
-        return func()
+        return coin_creation_map.get(coin_type)()
 
-dico = {
+coin_creation_map = {
     CoinType.DIME: Coin.create_dime,
     CoinType.NICKEL: Coin.create_nickel,
     CoinType.PENNY: Coin.create_penny,

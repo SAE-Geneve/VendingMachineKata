@@ -34,4 +34,4 @@ class VendingMachine:
             return CoinType.NICKEL
         elif coin.weight == 2 and coin.size == 2:
             return CoinType.QUARTER
-        return None
+        return CoinType.INVALID
