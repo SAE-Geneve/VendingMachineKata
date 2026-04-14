@@ -71,6 +71,7 @@ def test_select_product_with_not_enough_coins(vending_machine, coin_quarter):
 
     vending_machine.select(ProductType.Cola)
 
+    assert vending_machine_sold_out.can_afford(ProductType.Cola) == True
     assert vending_machine.get_stock(ProductType.Cola) == initial_stock
     assert initial_storage_sum == vending_machine.get_storage_sum()
 
@@ -89,6 +90,7 @@ def test_select_product_exact_changes(vending_machine_sold_out, coin_quarter):
 
     vending_machine_sold_out.select(ProductType.Cola)
 
+    assert vending_machine_sold_out.can_afford(ProductType.Cola) == False
     assert vending_machine_sold_out.get_storage_sum() == initial_storage_sum
 
 def test_select_product_out_of_stock(vending_machine_no_stock, coin_quarter):
@@ -98,6 +100,7 @@ def test_select_product_out_of_stock(vending_machine_no_stock, coin_quarter):
 
     vending_machine_no_stock.select(ProductType.Cola)
 
+    assert vending_machine_sold_out.can_afford(ProductType.Coal) == False
     assert vending_machine_no_stock.get_storage_sum() == initial_storage_sum
 
 @pytest.fixture
