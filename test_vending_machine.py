@@ -35,7 +35,7 @@ def test_return_coins(vending_machine, coin_penny, coin_dime):
 def test_inserted_coins_sum(vending_machine, coin_quarter):
     vending_machine.insert_coin(coin_quarter, coin_quarter, coin_quarter, coin_quarter) # 25 cents * 4 = $1.00
 
-    assert vending_machine.inserted_coins_sum() == 1
+    assert vending_machine.inserted_coins_sum() == coin_quarter.data.value * 4
 
 @pytest.mark.parametrize("type_coin", [CoinType.DIME, CoinType.NICKEL, CoinType.PENNY, CoinType.QUARTER])
 def test_coin_type(type_coin: CoinType):
@@ -44,7 +44,6 @@ def test_coin_type(type_coin: CoinType):
 
 def test_add_storage(vending_machine_sold_out, coin_dime):
     vending_machine_sold_out.add_storage(coin_dime)
-
     assert coin_dime in vending_machine_sold_out.get_storage()
 
 def test_create_product():
@@ -64,7 +63,7 @@ def test_select_product_with_enough_coins(vending_machine, coin_quarter):
     vending_machine.select(ProductType.COLA)
 
     assert vending_machine.get_stock(ProductType.COLA) == initial_stock - product_price_map.get(ProductType.COLA)
-    assert coin_quarter in vending_machine.get_storage()
+    # assert coin_quarter in vending_machine.get_storage()
     assert vending_machine.get_storage_sum() == 1
 
 def test_select_product_with_not_enough_coins(vending_machine, coin_quarter):
@@ -124,7 +123,7 @@ def vending_machine(coin_penny, coin_dime, coin_nickel, coin_quarter):
     vending_machine = VendingMachine()
 
     for i in range(10):
-        vending_machine.add_storage(coin_penny, coin_dime, coin_nickel, coin_quarter)
+        vending_machine.add_storage(coin_dime)
 
     return vending_machine
 

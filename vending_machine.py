@@ -97,4 +97,7 @@ class VendingMachine:
         raise ValueError("Invalid Product")
 
     def select(self, product_type: ProductType):
-        pass
+        data = self.get_product_from_type(product_type).data
+
+        if self.can_afford(product_type):
+            data.stock -= 1
