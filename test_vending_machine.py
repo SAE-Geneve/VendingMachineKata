@@ -40,6 +40,11 @@ def test_coin_type(type_coin: CoinType):
     coin = Coin.create_coin(type_coin)
     assert Coin.get_type_from_coin(coin) == type_coin
 
+def test_add_storage(vending_machine_no_money, coin_dime):
+    vending_machine_no_money.add_storage(coin_dime)
+
+    assert coin_dime in vending_machine_no_money.get_storage()
+
 def test_select_product_with_enough_coins(vending_machine, coin_quarter):
     vending_machine.insert_coin(coin_quarter, coin_quarter, coin_quarter, coin_quarter) # $1.00
 
@@ -71,7 +76,16 @@ def test_make_changes(vending_machine, coin_quarter):
     assert vending_machine.inserted_coins_sum() == 0
 
 @pytest.fixture
-def vending_machine():
+def vending_machine(coin_penny, coin_dime, coin_nickel, coin_quarter):
+    vending_machine = VendingMachine()
+
+    for i in range(10):
+        vending_machine.add_storage(coin_penny, coin_dime, coin_nickel, coin_quarter)
+
+    return VendingMachine()
+
+@pytest.fixture
+def vending_machine_no_money():
     return VendingMachine()
 
 @pytest.fixture
