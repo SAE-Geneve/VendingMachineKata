@@ -6,16 +6,18 @@ class VendingMachine:
     def __init__(self):
         self.storage: List[Coin] = []
         self.coins_basket: List[Coin] = []
+        self.total_money=0
 
     def InsertCoin(self, first_coin, *args):
         coins = list(args) + [first_coin]
         valid_coins = []
 
-        for c in coins:
-            if VendingMachine.GetTypeFromCoin(c) != CoinType.Penny:
-                valid_coins.append(c)
+        for coin in coins:
+            if VendingMachine.GetTypeFromCoin(coin) != CoinType.Penny:
+                valid_coins.append(coin)
+                self.total_money+=coin.CoinValue()
             else:
-                self.coins_basket.append(c)
+                self.coins_basket.append(coin)
 
         self.storage.extend(valid_coins)
 
@@ -24,6 +26,9 @@ class VendingMachine:
 
     def CheckBasket(self):
         return self.coins_basket
+
+    def MoneyTotal(self):
+        return self.total_money
 
     @staticmethod
     def GetTypeFromCoin(coin: Coin):
