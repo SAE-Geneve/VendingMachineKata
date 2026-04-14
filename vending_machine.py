@@ -4,7 +4,6 @@ from typing import List
 class VendingMachine:
     def __init__(self):
         self.inserted_coins:List[Coin] = []
-        # self.basket:List[Coin] = []
 
     def insert_coin(self, first_coin, *args):
         coins = list(args) + [first_coin]
