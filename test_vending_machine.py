@@ -1,4 +1,6 @@
 import pytest
+
+from product import product_price_map
 from vending_machine import *
 from coin import Coin
 
@@ -40,23 +42,24 @@ def test_coin_type(type_coin: CoinType):
     coin = Coin.create_coin(type_coin)
     assert Coin.get_type_from_coin(coin) == type_coin
 
-def test_add_storage(vending_machine_no_money, coin_dime):
-    vending_machine_no_money.add_storage(coin_dime)
+def test_add_storage(vending_machine_sold_out, coin_dime):
+    vending_machine_sold_out.add_storage(coin_dime)
 
-    assert coin_dime in vending_machine_no_money.get_storage()
+    assert coin_dime in vending_machine_sold_out.get_storage()
 
 def test_create_product():
     product = Product.create_product(ProductType.Candy)
+
     assert product.data.type == ProductType.Candy
 
-def test_select_product_with_enough_coins(vending_machine, coin_quarter):
+def test_select_product_with_enough_coins(vending_machine_sold_out, coin_quarter):
     vending_machine.insert_coin(coin_quarter, coin_quarter, coin_quarter, coin_quarter) # $1.00
 
     initial_stock = vending_machine.get_stock(ProductType.Cola) # $1.00
 
     vending_machine.select(ProductType.Cola)
 
-    assert vending_machine.get_stock(ProductType.Cola) == initial_stock - 1
+    assert vending_machine.get_stock(ProductType.Cola) == initial_stock + product_price_map.get(ProductType.Cola)
     assert coin_quarter in vending_machine.get_storage()
     assert vending_machine.get_storage_sum() == 1
 
@@ -79,6 +82,24 @@ def test_make_changes(vending_machine, coin_quarter):
     assert vending_machine.get_storage_sum() == 1
     assert vending_machine.inserted_coins_sum() == 0
 
+def test_select_product_exact_changes(vending_machine_sold_out, coin_quarter):
+    vending_machine_sold_out.insert_coin(coin_quarter, coin_quarter, coin_quarter, coin_quarter, coin_quarter) # $1.25
+
+    initial_storage_sum = vending_machine_sold_out.get_storage_sum()
+
+    vending_machine_sold_out.select(ProductType.Cola)
+
+    assert vending_machine_sold_out.get_storage_sum() == initial_storage_sum
+
+def test_select_product_out_of_stock(vending_machine_no_stock, coin_quarter):
+    vending_machine_no_stock.insert_coin(coin_quarter, coin_quarter, coin_quarter, coin_quarter, coin_quarter) # $1.25
+
+    initial_storage_sum = vending_machine_no_stock.get_storage_sum()
+
+    vending_machine_no_stock.select(ProductType.Cola)
+
+    assert vending_machine_no_stock.get_storage_sum() == initial_storage_sum
+
 @pytest.fixture
 def vending_machine(coin_penny, coin_dime, coin_nickel, coin_quarter):
     vending_machine = VendingMachine()
@@ -86,10 +107,19 @@ def vending_machine(coin_penny, coin_dime, coin_nickel, coin_quarter):
     for i in range(10):
         vending_machine.add_storage(coin_penny, coin_dime, coin_nickel, coin_quarter)
 
-    return VendingMachine()
+    return vending_machine
 
 @pytest.fixture
-def vending_machine_no_money():
+def vending_machine_no_stock(coin_penny, coin_dime, coin_nickel, coin_quarter):
+    vending_machine = VendingMachine(0)
+
+    for i in range(10):
+        vending_machine.add_storage(coin_penny, coin_dime, coin_nickel, coin_quarter)
+
+    return vending_machine
+
+@pytest.fixture
+def vending_machine_sold_out():
     return VendingMachine()
 
 @pytest.fixture
