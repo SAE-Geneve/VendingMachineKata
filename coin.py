@@ -2,11 +2,11 @@ from dataclasses import dataclass
 from enum import Enum
 
 class CoinType(Enum):
+    INVALID = 0
     PENNY = 1
     NICKEL = 2
     DIME = 3
     QUARTER = 4
-    INVALID = 5
 
 @dataclass
 class CoinData:
@@ -20,18 +20,18 @@ class Coin:
 
     @staticmethod
     def create_coin(coin_type: CoinType):
-        if coin_type not in coin_parameter_map:
+        if coin_type not in coin_data_map:
             raise ValueError("Invalid Coin")
-        return Coin(coin_parameter_map.get(coin_type))
+        return Coin(coin_data_map.get(coin_type))
 
     @staticmethod
     def get_type_from_coin(coin: Coin):
-        for key, param in coin_parameter_map.items():
+        for key, param in coin_data_map.items():
             if param == coin.data:
                 return key
         return CoinType.INVALID
 
-coin_parameter_map = {
+coin_data_map = {
     CoinType.PENNY: CoinData(1, 1, 0.01),
     CoinType.DIME: CoinData(1, 2, 0.05),
     CoinType.NICKEL: CoinData(2, 1, 0.1),

@@ -8,9 +8,10 @@ class ProductData:
     type: ProductType
 
 class ProductType(Enum):
-    Cola = 1
-    Chips = 2
-    Candy = 3
+    INVALID = 0
+    COLA = 1
+    CHIPS = 2
+    CANDY = 3
 
 class Product:
     def __init__(self, data: ProductData):
@@ -29,7 +30,7 @@ class Product:
         return Product(product)
 
 product_price_map = {
-    ProductType.Cola : 1,
-    ProductType.Chips : 0.5,
-    ProductType.Candy : 0.65
+    ProductType.COLA : 1,
+    ProductType.CHIPS : 0.5,
+    ProductType.CANDY : 0.65
 }
