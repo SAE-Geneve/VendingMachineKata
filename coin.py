@@ -9,7 +9,7 @@ class CoinType(Enum):
     INVALID = 5
 
 @dataclass
-class CoinParameter:
+class CoinData:
     weight: int
     size: int
     value: float
@@ -32,8 +32,8 @@ class Coin:
         return CoinType.INVALID
 
 coin_parameter_map = {
-    CoinType.PENNY: CoinParameter(1, 1, 1),
-    CoinType.DIME: CoinParameter(1, 2, 5),
-    CoinType.NICKEL: CoinParameter(2, 1, 10),
-    CoinType.QUARTER: CoinParameter(2, 2, 25)
+    CoinType.PENNY: CoinData(1, 1, 1),
+    CoinType.DIME: CoinData(1, 2, 5),
+    CoinType.NICKEL: CoinData(2, 1, 10),
+    CoinType.QUARTER: CoinData(2, 2, 25)
 }
