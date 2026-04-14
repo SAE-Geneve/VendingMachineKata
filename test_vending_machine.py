@@ -48,7 +48,7 @@ def test_add_storage(vending_machine_sold_out, coin_dime):
     assert coin_dime in vending_machine_sold_out.get_storage()
 
 def test_create_product():
-    product = Product.create_product(ProductType.Candy)
+    product = Product.create_product(ProductType.Candy, 1)
 
     assert product.data.type == ProductType.Candy
 

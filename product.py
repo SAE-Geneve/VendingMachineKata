@@ -20,7 +20,13 @@ class Product:
     def create_product(product_type, stock):
         if product_type not in product_price_map:
             raise ValueError("Invalid Product")
-        return Product(product_price_map.get(product_type), stock, product_type)
+
+        product = ProductData
+        product.price = product_price_map.get(product_type)
+        product.stock = stock
+        product.type = product_type
+
+        return Product(product)
 
 product_price_map = {
     ProductType.Cola : 1,
