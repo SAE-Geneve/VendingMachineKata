@@ -8,11 +8,11 @@ class VendingMachine:
     def __init__(self, initial_stock = 10):
         self.inserted_coins:List[Coin] = []
         self.storage:List[Coin] = []
-        self.products:List[Product] = [
-            Product.create_product(ProductType.COLA, initial_stock),
-            Product.create_product(ProductType.CHIPS, initial_stock),
-            Product.create_product(ProductType.CANDY, initial_stock)
-        ]
+        self.products:List[Product] = []
+        self.products.append(Product.create_product(ProductType.COLA, initial_stock))
+        self.products.append(Product.create_product(ProductType.CHIPS, initial_stock))
+        self.products.append(Product.create_product(ProductType.CANDY, initial_stock))
+
 
     def insert_coin(self, first_coin, *args):
         coins = list(args) + [first_coin]
@@ -94,7 +94,7 @@ class VendingMachine:
         for product in self.products:
             if product.data.type == product_type:
                 return product
-        return Product.create_product(ProductType.INVALID, 0)
+        raise ValueError("Invalid Product")
 
     def select(self, product_type: ProductType):
         pass

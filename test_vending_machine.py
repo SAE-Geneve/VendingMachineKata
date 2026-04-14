@@ -53,8 +53,8 @@ def test_create_product():
     assert product.data.stock == 1
 
 def test_get_product_from_type(vending_machine):
-    product = vending_machine.get_product_from_type(ProductType.COLA)
-    assert product.data.type == ProductType.COLA
+    product = vending_machine.get_product_from_type(ProductType.CANDY)
+    assert product.data.type == ProductType.CANDY
 
 def test_select_product_with_enough_coins(vending_machine, coin_quarter):
     vending_machine.insert_coin(coin_quarter, coin_quarter, coin_quarter, coin_quarter) # $1.00

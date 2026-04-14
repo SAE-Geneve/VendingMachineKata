@@ -22,12 +22,9 @@ class Product:
         if product_type not in product_price_map:
             raise ValueError("Invalid Product")
 
-        product = ProductData
-        product.price = product_price_map.get(product_type)
-        product.stock = stock
-        product.type = product_type
+        data = ProductData(product_price_map.get(product_type), stock, product_type)
 
-        return Product(product)
+        return Product(data)
 
 product_price_map = {
     ProductType.COLA : 1,
