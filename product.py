@@ -27,7 +27,7 @@ class Product:
         return Product(data)
 
 product_price_map = {
-    ProductType.COLA : 1,
-    ProductType.CHIPS : 0.5,
-    ProductType.CANDY : 0.65
+    ProductType.COLA : 100,
+    ProductType.CHIPS : 50,
+    ProductType.CANDY : 65
 }
