@@ -45,6 +45,10 @@ def test_add_storage(vending_machine_no_money, coin_dime):
 
     assert coin_dime in vending_machine_no_money.get_storage()
 
+def test_create_product():
+    product = Product.create_product(ProductType.Candy)
+    assert product.data.type == ProductType.Candy
+
 def test_select_product_with_enough_coins(vending_machine, coin_quarter):
     vending_machine.insert_coin(coin_quarter, coin_quarter, coin_quarter, coin_quarter) # $1.00
 

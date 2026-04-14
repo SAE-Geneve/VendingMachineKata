@@ -8,11 +8,7 @@ class VendingMachine:
     def __init__(self, initial_stock = 10):
         self.inserted_coins:List[Coin] = []
         self.storage:List[Coin] = []
-        self.products = [
-            Product.create_product(ProductType.Cola, initial_stock),
-            Product.create_product(ProductType.Chips, initial_stock),
-            Product.create_product(ProductType.Candy, initial_stock)
-        ]
+        self.products:List[Product] = []
 
     def insert_coin(self, first_coin, *args):
         coins = list(args) + [first_coin]
