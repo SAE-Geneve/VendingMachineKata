@@ -29,23 +29,36 @@ def test_coin_invalidity(vending_machine):
     assert penny in vending_machine.CheckBasket()
     assert len(vending_machine.CheckStorage()) == 0
 
+
 def test_coin_total(vending_machine):
     vending_machine.InsertCoin(Coin.CreateCoin(CoinType.Dime))
-    assert vending_machine.MoneyTotal()==10
+    assert vending_machine.MoneyTotal() == 10
 
     vending_machine.InsertCoin(Coin.CreateCoin(CoinType.Quarter))
-    assert vending_machine.MoneyTotal()==35
+    assert vending_machine.MoneyTotal() == 35
 
     vending_machine.InsertCoin(Coin.CreateCoin(CoinType.Penny))
-    assert vending_machine.MoneyTotal()==35
+    assert vending_machine.MoneyTotal() == 35
 
     vending_machine.InsertCoin(Coin.CreateCoin(CoinType.Nickel))
-    assert vending_machine.MoneyTotal()==40
+    assert vending_machine.MoneyTotal() == 40
+
 
 @pytest.mark.parametrize("type_coin", [CoinType.Penny, CoinType.Dime, CoinType.Nickel, CoinType.Quarter])
 def test_type_coin(type_coin):
     c = Coin.CreateCoin(type_coin)
     assert VendingMachine.GetTypeFromCoin(c) == type_coin
+
+
+def test_select_product(vending_machine):
+    assert vending_machine.SelectProduct("cola") == False
+
+    vending_machine.InsertCoin(Coin.CreateCoin(CoinType.Quarter))
+    vending_machine.InsertCoin(Coin.CreateCoin(CoinType.Quarter))
+    vending_machine.InsertCoin(Coin.CreateCoin(CoinType.Quarter))
+    vending_machine.InsertCoin(Coin.CreateCoin(CoinType.Quarter))
+
+    assert vending_machine.SelectProduct("cola") == True
 
 
 @pytest.fixture()

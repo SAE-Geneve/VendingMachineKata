@@ -10,7 +10,7 @@ class CoinType(Enum):
 
 
 class Coin:
-    def __init__(self, weight, size):
+    def __init__(self, weight: int, size: int):
         self.weight = weight
         self.size = size
 

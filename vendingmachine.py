@@ -1,4 +1,5 @@
 from coin import CoinType, Coin
+from product import Product
 from typing import List
 
 
@@ -6,9 +7,14 @@ class VendingMachine:
     def __init__(self):
         self.storage: List[Coin] = []
         self.coins_basket: List[Coin] = []
-        self.total_money=0
+        self.products: List[Product] = [
+            Product("cola", 100),
+            Product("chips", 50),
+            Product("candy", 65)
+        ]
+        self.total_money = 0
 
-    def InsertCoin(self, first_coin, *args):
+    def InsertCoin(self, first_coin: Coin, *args):
         coins = list(args) + [first_coin]
         valid_coins = []
 
@@ -17,17 +23,27 @@ class VendingMachine:
                 valid_coins.append(coin)
                 match VendingMachine.GetTypeFromCoin(coin):
                     case CoinType.Nickel:
-                        self.total_money+=5
+                        self.total_money += 5
                     case CoinType.Dime:
-                        self.total_money+=10
+                        self.total_money += 10
                     case CoinType.Quarter:
-                        self.total_money+=25
+                        self.total_money += 25
                     case _:
                         print("Invalid coin inserted however it was accepted")
             else:
                 self.coins_basket.append(coin)
 
         self.storage.extend(valid_coins)
+
+    def SelectProduct(self, choice: str):
+        for product in self.products:
+            if choice == product.name:
+                if self.total_money>=product.price:
+                    print("Product is available")
+                    return True
+            else:
+                print("Product is not available")
+                return False
 
     def CheckStorage(self):
         return self.storage
