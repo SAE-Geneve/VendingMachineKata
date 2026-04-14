@@ -15,7 +15,15 @@ class VendingMachine:
         for coin in coins:
             if VendingMachine.GetTypeFromCoin(coin) != CoinType.Penny:
                 valid_coins.append(coin)
-                self.total_money+=coin.CoinValue()
+                match VendingMachine.GetTypeFromCoin(coin):
+                    case CoinType.Nickel:
+                        self.total_money+=5
+                    case CoinType.Dime:
+                        self.total_money+=10
+                    case CoinType.Quarter:
+                        self.total_money+=25
+                    case _:
+                        print("Invalid coin inserted however it was accepted")
             else:
                 self.coins_basket.append(coin)
 

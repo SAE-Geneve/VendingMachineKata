@@ -10,30 +10,25 @@ class CoinType(Enum):
 
 
 class Coin:
-    def __init__(self, weight, size, price):
+    def __init__(self, weight, size):
         self.weight = weight
         self.size = size
-        self.price = price
-
-
-    def CoinValue(self):
-        return self.price
 
     @staticmethod
     def CreatePenny():
-        return Coin(1, 1, 1)
+        return Coin(1, 1)
 
     @staticmethod
     def CreateNickel():
-        return Coin(1, 2, 5)
+        return Coin(1, 2)
 
     @staticmethod
     def CreateDime():
-        return Coin(2, 1, 10)
+        return Coin(2, 1)
 
     @staticmethod
     def CreateQuarter():
-        return Coin(2, 2, 25)
+        return Coin(2, 2)
 
     @staticmethod
     def CreateCoin(coin_type: CoinType):
