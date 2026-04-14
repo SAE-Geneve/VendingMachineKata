@@ -58,13 +58,17 @@ def test_get_product_from_type(vending_machine):
 def test_select_product_with_enough_coins(vending_machine, coin_quarter):
     vending_machine.insert_coin(coin_quarter, coin_quarter, coin_quarter, coin_quarter) # $1.00
 
+    assert vending_machine.can_afford(ProductType.COLA) == True
+
     initial_stock = vending_machine.get_stock(ProductType.COLA) # $1.00
+    initial_sum = vending_machine.get_storage_sum()
 
     vending_machine.select(ProductType.COLA)
 
     assert vending_machine.get_stock(ProductType.COLA) == initial_stock - 1
     assert coin_quarter in vending_machine.get_storage()
-    assert vending_machine.get_storage_sum() == 1
+    assert vending_machine.get_storage_sum() == initial_sum + product_price_map.get(ProductType.COLA)
+    assert len(vending_machine.get_inserted_coins()) == 0
 
 def test_select_product_with_not_enough_coins(vending_machine, coin_quarter):
     vending_machine.insert_coin(coin_quarter, coin_quarter, coin_quarter) # $0.75

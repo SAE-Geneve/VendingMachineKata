@@ -5,10 +5,11 @@ from product import Product, ProductType
 
 
 class VendingMachine:
-    def __init__(self, initial_stock = 10):
+    def __init__(self, initial_stock = 3):
         self.inserted_coins:List[Coin] = []
         self.storage:List[Coin] = []
         self.products:List[Product] = []
+
         self.products.append(Product.create_product(ProductType.COLA, initial_stock))
         self.products.append(Product.create_product(ProductType.CHIPS, initial_stock))
         self.products.append(Product.create_product(ProductType.CANDY, initial_stock))
@@ -65,31 +66,8 @@ class VendingMachine:
 
         # Changes
         change_sum = inserted_sum - price
-        current_sum = change_sum
-        change_coins:List[Coin] = []
 
-        quarter = coin_data_map.get(CoinType.QUARTER)
-        nickel = coin_data_map.get(CoinType.NICKEL)
-        dime = coin_data_map.get(CoinType.DIME)
-        penny = coin_data_map.get(CoinType.PENNY)
-
-        while current_sum >= quarter.value and quarter in self.storage:
-            change_coins.append(quarter)
-            current_sum -= quarter.value
-
-        while current_sum >= nickel.value and nickel in self.storage:
-            change_coins.append(nickel)
-            current_sum -= nickel.value
-
-        while current_sum >= dime.value and dime in self.storage:
-            change_coins.append(dime)
-            current_sum -= dime.value
-
-        while current_sum >= penny.value and penny in self.storage:
-            change_coins.append(penny)
-            current_sum -= penny.value
-
-        return VendingMachine.coins_sum(change_coins) == change_sum
+        return VendingMachine.coins_sum(self.calculate_changes(change_sum)) == change_sum
     def get_product_from_type(self, product_type: ProductType):
         for product in self.products:
             if product.data.type == product_type:
@@ -99,5 +77,40 @@ class VendingMachine:
     def select(self, product_type: ProductType):
         data = self.get_product_from_type(product_type).data
 
-        if self.can_afford(product_type):
-            data.stock -= 1
+        if not self.can_afford(product_type):
+            return
+
+        data.stock -= 1
+        change_sum = self.inserted_coins_sum() - data.price
+        change_coins = self.calculate_changes(change_sum)
+        self.storage.extend(self.inserted_coins)
+        self.inserted_coins.clear()
+
+        for coin in change_coins:
+            self.storage.remove(coin)
+
+    def calculate_changes(self, change_sum):
+        change_coins:List[Coin] = []
+
+        quarter = coin_data_map.get(CoinType.QUARTER)
+        nickel = coin_data_map.get(CoinType.NICKEL)
+        dime = coin_data_map.get(CoinType.DIME)
+        penny = coin_data_map.get(CoinType.PENNY)
+
+        while change_sum >= quarter.value and quarter in self.storage:
+            change_coins.append(quarter)
+            change_sum -= quarter.value
+
+        while change_sum >= nickel.value and nickel in self.storage:
+            change_coins.append(nickel)
+            change_sum -= nickel.value
+
+        while change_sum >= dime.value and dime in self.storage:
+            change_coins.append(dime)
+            change_sum -= dime.value
+
+        while change_sum >= penny.value and penny in self.storage:
+            change_coins.append(penny)
+            change_sum -= penny.value
+
+        return change_coins
