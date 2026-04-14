@@ -35,7 +35,7 @@ def test_return_coins(vending_machine, coin_penny, coin_dime):
 def test_inserted_coins_sum(vending_machine, coin_quarter):
     vending_machine.insert_coin(coin_quarter, coin_quarter, coin_quarter, coin_quarter) # 25 cents * 4 = $1.00
 
-    assert vending_machine.inserted_coins_sum() == 100
+    assert vending_machine.inserted_coins_sum() == 1
 
 @pytest.mark.parametrize("type_coin", [CoinType.DIME, CoinType.NICKEL, CoinType.PENNY, CoinType.QUARTER])
 def test_coin_type(type_coin: CoinType):

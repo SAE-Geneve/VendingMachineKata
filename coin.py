@@ -32,8 +32,8 @@ class Coin:
         return CoinType.INVALID
 
 coin_parameter_map = {
-    CoinType.PENNY: CoinData(1, 1, 1),
-    CoinType.DIME: CoinData(1, 2, 5),
-    CoinType.NICKEL: CoinData(2, 1, 10),
-    CoinType.QUARTER: CoinData(2, 2, 25)
+    CoinType.PENNY: CoinData(1, 1, 0.1),
+    CoinType.DIME: CoinData(1, 2, 0.5),
+    CoinType.NICKEL: CoinData(2, 1, 0.10),
+    CoinType.QUARTER: CoinData(2, 2, 0.25)
 }
