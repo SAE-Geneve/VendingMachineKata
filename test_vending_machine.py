@@ -48,26 +48,27 @@ def test_select_product_with_enough_coins(vending_machine, coin_quarter):
     vending_machine.select(ProductType.Cola)
 
     assert vending_machine.get_stock(ProductType.Cola) == initial_stock - 1
-    assert vending_machine.get_storage() == 1
+    assert coin_quarter in vending_machine.get_storage()
+    assert vending_machine.get_storage_sum() == 1
 
 def test_select_product_with_not_enough_coins(vending_machine, coin_quarter):
     vending_machine.insert_coin(coin_quarter, coin_quarter, coin_quarter) # $0.75
 
     initial_stock = vending_machine.get_stock(ProductType.Cola) # $1.00
-    initial_storage = vending_machine.get_storage()
+    initial_storage_sum = vending_machine.get_storage_sum()
 
     vending_machine.select(ProductType.Cola)
 
     assert vending_machine.get_stock(ProductType.Cola) == initial_stock
-    assert initial_storage == vending_machine.get_storage()
+    assert initial_storage_sum == vending_machine.get_storage_sum()
 
 def test_make_changes(vending_machine, coin_quarter):
     vending_machine.insert_coin(coin_quarter, coin_quarter, coin_quarter, coin_quarter, coin_quarter) # $1.25
 
     vending_machine.select(ProductType.Cola)
 
-    assert vending_machine.get_storage() == 1
-    assert vending_machine.get_inserted_coins() == 0
+    assert vending_machine.get_storage_sum() == 1
+    assert vending_machine.inserted_coins_sum() == 0
 
 @pytest.fixture
 def vending_machine():

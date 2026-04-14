@@ -15,8 +15,8 @@ class CoinData:
     value: float
 
 class Coin:
-    def __init__(self, coin_parameter):
-        self.coin_parameter = coin_parameter
+    def __init__(self, data):
+        self.data = data
 
     @staticmethod
     def create_coin(coin_type: CoinType):
@@ -27,7 +27,7 @@ class Coin:
     @staticmethod
     def get_type_from_coin(coin: Coin):
         for key, param in coin_parameter_map.items():
-            if param == coin.coin_parameter:
+            if param == coin.data:
                 return key
         return CoinType.INVALID
 
