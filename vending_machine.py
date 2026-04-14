@@ -34,6 +34,9 @@ class VendingMachine:
     def add_storage(self, first_coin, *args):
         self.storage.extend(list(args) + [first_coin])
 
+    def get_storage(self):
+        return self.storage
+
     def get_storage_sum(self):
         coins_sum = 0
         for coin in self.storage:
