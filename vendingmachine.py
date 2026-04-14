@@ -38,12 +38,16 @@ class VendingMachine:
     def SelectProduct(self, choice: str):
         for product in self.products:
             if choice == product.name:
-                if self.total_money>=product.price:
+                if self.total_money >= product.price:
                     print("Product is available")
                     return True
             else:
                 print("Product is not available")
                 return False
+
+    def DisplayProducts(self):
+        for product in self.products:
+            print("Item : " + product.name + " | Price : " + str(product.price) + " | Quantity available : ")
 
     def CheckStorage(self):
         return self.storage

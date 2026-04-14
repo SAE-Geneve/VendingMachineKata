@@ -51,6 +51,7 @@ def test_type_coin(type_coin):
 
 
 def test_select_product(vending_machine):
+    vending_machine.DisplayProducts()
     assert vending_machine.SelectProduct("cola") == False
 
     vending_machine.InsertCoin(Coin.CreateCoin(CoinType.Quarter))

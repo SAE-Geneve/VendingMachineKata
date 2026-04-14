@@ -1,5 +1,5 @@
 from coin import Coin
-from product import Products
+from product import Product
 
 if __name__ == '__main__':
     penny = Coin.CreatePenny()
