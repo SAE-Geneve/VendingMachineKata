@@ -33,7 +33,7 @@ class Coin:
 
 coin_data_map = {
     CoinType.PENNY: CoinData(1, 1, 1),
-    CoinType.DIME: CoinData(1, 2, 5),
-    CoinType.NICKEL: CoinData(2, 1, 10),
+    CoinType.NICKEL: CoinData(2, 1, 5),
+    CoinType.DIME: CoinData(1, 2, 10),
     CoinType.QUARTER: CoinData(2, 2, 25)
 }

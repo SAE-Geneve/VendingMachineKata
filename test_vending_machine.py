@@ -117,13 +117,15 @@ def test_select_product_out_of_stock(vending_machine_no_stock, coin_quarter):
 
     assert vending_machine_no_stock.get_storage_sum() == initial_storage_sum
 
-def test_make_changes(vending_machine_sold_out, coin_quarter, coin_nickel, coin_dime):
-    vending_machine_sold_out.insert_coin(coin_quarter, coin_quarter, coin_quarter, coin_nickel, coin_nickel, coin_nickel) # $1.05
-    vending_machine_sold_out.add_storage(coin_dime)
+def test_make_changes(vending_machine_sold_out, coin_quarter, coin_nickel, coin_dime, coin_penny):
+    vending_machine_sold_out.insert_coin(coin_quarter, coin_quarter, coin_quarter, coin_dime, coin_dime, coin_dime) # $1.05
+
+    assert vending_machine_sold_out.get_storage_sum() == vending_machine_sold_out.inserted_coins_sum() - product_price_map.get(ProductType.COLA)
+    assert vending_machine_sold_out.can_afford(ProductType.COLA) == True
 
     vending_machine_sold_out.select(ProductType.COLA)
 
-    assert vending_machine_sold_out.get_storage_sum() == 1
+    assert vending_machine_sold_out.get_storage_sum() == product_price_map.get(ProductType.COLA)
     assert vending_machine_sold_out.inserted_coins_sum() == 0
 
 @pytest.fixture
