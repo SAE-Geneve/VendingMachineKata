@@ -8,7 +8,11 @@ class VendingMachine:
     def __init__(self, initial_stock = 10):
         self.inserted_coins:List[Coin] = []
         self.storage:List[Coin] = []
-        self.products:List[Product] = []
+        self.products:List[Product] = [
+            Product.create_product(ProductType.COLA, initial_stock),
+            Product.create_product(ProductType.CHIPS, initial_stock),
+            Product.create_product(ProductType.CANDY, initial_stock)
+        ]
 
     def insert_coin(self, first_coin, *args):
         coins = list(args) + [first_coin]
@@ -42,6 +46,9 @@ class VendingMachine:
 
     def get_storage_sum(self):
         return VendingMachine.coins_sum(self.storage)
+
+    def get_stock(self, product_type: ProductType):
+        return self.get_product_from_type(product_type).data.stock
 
     def can_afford(self, product_type):
         product = self.get_product_from_type(product_type)
@@ -87,17 +94,7 @@ class VendingMachine:
         for product in self.products:
             if product.data.type == product_type:
                 return product
-        raise ValueError("Invalid Product")
+        return Product.create_product(ProductType.INVALID, 0)
 
     def select(self, product_type: ProductType):
-        for product in self.products:
-            data = product.data
-
-            if product_type != data.type:
-                continue
-
-            coins_sum = self.inserted_coins
-            if coins_sum >= data.price:
-                data.stock -= 1
-
-            break
+        pass
