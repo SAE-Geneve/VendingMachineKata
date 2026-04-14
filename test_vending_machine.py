@@ -89,6 +89,7 @@ def test_select_product_exact_changes(vending_machine_sold_out, coin_quarter):
     assert vending_machine_sold_out.can_afford(ProductType.COLA) == False
 
     initial_stock = vending_machine_sold_out.get_stock(ProductType.COLA)
+    initial_sum = vending_machine_sold_out.get_storage_sum()
 
     vending_machine_sold_out.select(ProductType.COLA)
 
@@ -97,9 +98,12 @@ def test_select_product_exact_changes(vending_machine_sold_out, coin_quarter):
     vending_machine_sold_out.return_coins()
     vending_machine_sold_out.insert_coin(coin_quarter, coin_quarter, coin_quarter, coin_quarter) # $1.00
 
+    assert vending_machine_sold_out.can_afford(ProductType.COLA) == True
+
     vending_machine_sold_out.select(ProductType.COLA)
 
     assert vending_machine_sold_out.get_stock(ProductType.COLA) == initial_stock - 1
+    assert vending_machine_sold_out.get_storage_sum() == initial_sum + product_price_map.get(ProductType.COLA)
 
 
 def test_select_product_out_of_stock(vending_machine_no_stock, coin_quarter):
