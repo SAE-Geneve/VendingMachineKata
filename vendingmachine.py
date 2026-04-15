@@ -7,11 +7,11 @@ class VendingMachine:
     def __init__(self):
         self.storage: List[Coin] = []
         self.coins_basket: List[Coin] = []
-        self.products: List[Product] = [
-            Product("cola", 100),
-            Product("chips", 50),
-            Product("candy", 65)
-        ]
+        self.products: dict = {
+            "cola": 100,
+            "chips": 50,
+            "candy": 65
+        }
         self.total_money = 0
 
     def InsertCoin(self, first_coin: Coin, *args):
@@ -36,18 +36,17 @@ class VendingMachine:
         self.storage.extend(valid_coins)
 
     def SelectProduct(self, choice: str):
-        for product in self.products:
-            if choice == product.name:
-                if self.total_money >= product.price:
-                    print("Product is available")
-                    return True
+        if choice in self.products:
+            if self.total_money >= self.products[choice]:
+                print("Product is available")
+                return True
             else:
                 print("Product is not available")
                 return False
 
     def DisplayProducts(self):
         for product in self.products:
-            print("Item : " + product.name + " | Price : " + str(product.price) + " | Quantity available : ")
+            print("Item : " + product + " | Price : " + str(self.products[product]) + " | Quantity available : ")
 
     def CheckStorage(self):
         return self.storage
